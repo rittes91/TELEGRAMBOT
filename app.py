@@ -111,13 +111,39 @@ def format_pre_market_message(df):
     def fmt_row(row):
         return f"• <b>{row['symbol']}</b> ({row['change']:+.2f}%) [{row['sector']}]"
 
-    msg = f"📊 <b>PRE-MARKET REPORT</b>\n\n"
-    if not gainers.empty:
-        msg += "📈 <b>Top Gainers (↑2%+)</b>:\n" + "\n".join(fmt_row(r) for _, r in gainers.iterrows()) + "\n\n"
-    if not losers.empty:
-        msg += "📉 <b>Top Losers (↓2%-)</b>:\n" + "\n".join(fmt_row(r) for _, r in losers.iterrows()) + "\n\n"
+    msg = f"""
+📊 <b>PRE-MARKET GAINERS/LOSERS</b>
 
-    msg += f"📅 <b>Date:</b> {datetime.datetime.now().strftime('%d-%b-%Y')} | ⏰ {datetime.datetime.now().strftime('%H:%M:%S')}"
+🔍 <b>Criteria:</b> ±2% or more change in pre-open
+📅 <b>Date:</b> {datetime.datetime.now().strftime('%d-%b-%Y')}  ⏰ <b>Time:</b> {datetime.datetime.now().strftime('%H:%M:%S')}
+"""
+
+    if not gainers.empty:
+        msg += "
+📈 <b>Top Gainers (↑2%+)</b>
+" + "
+".join(fmt_row(r) for _, r in gainers.iterrows()) + "
+"
+    else:
+        msg += "
+📈 <b>Top Gainers:</b> None found above 2%
+"
+
+    if not losers.empty:
+        msg += "
+📉 <b>Top Losers (↓2%-)</b>
+" + "
+".join(fmt_row(r) for _, r in losers.iterrows()) + "
+"
+    else:
+        msg += "
+📉 <b>Top Losers:</b> None found below -2%
+"
+
+    msg += """
+
+🟢 <i>Tip:</i> Focus on sectors with multiple movers for trend strength.
+"""
     return msg
 
 # ▶️ Manual trigger
