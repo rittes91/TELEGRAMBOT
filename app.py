@@ -119,26 +119,15 @@ def format_pre_market_message(df):
 """
 
     if not gainers.empty:
-        msg += "
-📈 <b>Top Gainers (↑2%+)</b>
-" + "
-".join(fmt_row(r) for _, r in gainers.iterrows()) + "
-"
-    else:
-        msg += "
-📈 <b>Top Gainers:</b> None found above 2%
-"
+    msg += "\n📈 <b>Top Gainers (↑2%+)</b>\n" + "\n".join(fmt_row(r) for _, r in gainers.iterrows()) + "\n"
+else:
+    msg += "\n📈 <b>Top Gainers:</b> None found above 2%\n"
 
-    if not losers.empty:
-        msg += "
-📉 <b>Top Losers (↓2%-)</b>
-" + "
-".join(fmt_row(r) for _, r in losers.iterrows()) + "
-"
-    else:
-        msg += "
-📉 <b>Top Losers:</b> None found below -2%
-"
+if not losers.empty:
+    msg += "\n📉 <b>Top Losers (↓2%-)</b>\n" + "\n".join(fmt_row(r) for _, r in losers.iterrows()) + "\n"
+else:
+    msg += "\n📉 <b>Top Losers:</b> None found below -2%\n"
+
 
     msg += """
 🟢 <i>Tip:</i> Focus on sectors with multiple movers for trend strength.
