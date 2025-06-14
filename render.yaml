@@ -1,11 +1,15 @@
 services:
   - type: web
-    name: telegram-trading-bot
+    name: nse-trading-bot
     env: python
+    region: singapore  # Close to Indian markets
+    plan: starter      # Free tier
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
-    plan: free
-    autoDeploy: true
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: 3.11.4
+      - key: BOT_TOKEN
+        sync: false  # Set in Render dashboard
+      - key: RENDER_EXTERNAL_URL
+        sync: false
