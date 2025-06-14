@@ -141,7 +141,6 @@ def format_pre_market_message(df):
 "
 
     msg += """
-
 🟢 <i>Tip:</i> Focus on sectors with multiple movers for trend strength.
 """
     return msg
